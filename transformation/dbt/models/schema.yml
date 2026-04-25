@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: silver_reservoir
+    description: "Cleaned reservoir and dam water level records (Silver layer)"
+    columns:
+      - name: reservoir_id
+        description: "Unique reservoir identifier from RID"
+        tests:
+          - not_null
+      - name: record_date
+        description: "Date of the measurement"
+        tests:
+          - not_null
+      - name: percent_storage
+        description: "Percentage of reservoir capacity currently filled (0–100)"
+        tests:
+          - not_null
+
+  - name: silver_flood_risk
+    description: "Monthly flood risk areas per sub-district — 17-year historical dataset"
+    columns:
+      - name: geocode
+        description: "6-digit sub-district code"
+        tests:
+          - not_null
+      - name: month
+        description: "Calendar month (1–12)"
+        tests:
+          - not_null
+
+  - name: silver_weather
+    description: "Daily weather forecast per province (mock TMD data)"
+    columns:
+      - name: prov_code
+        description: "Province code matching PROV_CODE in flood risk data"
+        tests:
+          - not_null
+      - name: forecast_date
+        description: "Forecast target date"
+        tests:
+          - not_null

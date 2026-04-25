@@ -1,0 +1,62 @@
+# ── Environment & Secrets ──────────────────────────────────────────────────────
+.env
+# .env.example is intentionally tracked (template only)
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+
+# ── Pipeline Runtime State ────────────────────────────────────────────────────
+data/.watermark.json
+data/.producer_state.json
+
+# ── Generated Data (pipeline outputs — not tracked) ──────────────────────────
+data/dq_reports/*.json
+data/exports/alerts.json
+data/exports/reservoirs.json
+data/exports/dq_latest.json
+data/exports/pipeline_meta.json
+data/exports/csv/alerts.csv
+data/exports/csv/reservoirs.csv
+data/exports/csv/pipeline_meta.csv
+
+# Keep directory structure in git
+!data/.gitkeep
+!data/dq_reports/.gitkeep
+!data/exports/.gitkeep
+!data/exports/csv/.gitkeep
+
+# ── Source Data ───────────────────────────────────────────────────────────────
+# flood_risk_area.csv is included in the repo (สสน. 17-year historical reference)
+
+# ── Power BI ──────────────────────────────────────────────────────────────────
+*.pbix
+*.pbit
+
+# ── Airflow ───────────────────────────────────────────────────────────────────
+logs/
+airflow.db
+airflow.cfg
+standalone_admin_password.txt
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+# docker-compose.override.yml  ← uncomment if you use local overrides
+
+# ── OS / Editor ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo

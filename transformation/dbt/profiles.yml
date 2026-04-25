@@ -1,0 +1,11 @@
+flood_monitoring:
+  target: dev
+  outputs:
+    dev:
+      type: hive
+      method: thrift
+      host: hive-server
+      port: 10000
+      schema: flood_monitoring
+      threads: 2
+      auth_mechanism: PLAIN
