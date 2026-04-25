@@ -154,7 +154,6 @@ flood-monitoring/
 │           └── pipeline_meta.csv       # 1 row (flattened run metadata)
 │
 ├── DATA_WAREHOUSE.md                   # Full data warehouse schema documentation
-├── Chapter4_5_6_Report.md             # Project report (Ch. 4–6)
 └── PROJECT_EXPLANATION.md              # High-level project explanation
 ```
 
