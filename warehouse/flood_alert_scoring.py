@@ -466,19 +466,25 @@ def main():
     weather_df = load_parquet_partition(client, SILVER_WEATHER_ROOT, target_date)
     log.info("Weather data: %d rows", len(weather_df))
 
-    # 3. Load Silver flood risk (latest partition — static data, load most recent)
+    # 3. Load Silver flood risk (static data, support both single-file and partitioned)
     flood_risk_df = pd.DataFrame()
     try:
-        partitions = client.list(SILVER_FLOOD_RISK_ROOT, status=False)
-        partitions = sorted(partitions, reverse=True)  # most recent first
-        for part in partitions:
-            if not part.startswith("dt="):
-                continue
-            part_date = part.replace("dt=", "")
-            flood_risk_df = load_parquet_partition(client, SILVER_FLOOD_RISK_ROOT, part_date)
-            if not flood_risk_df.empty:
-                log.info("Flood risk data from partition %s: %d rows", part, len(flood_risk_df))
-                break
+        entries = client.list(SILVER_FLOOD_RISK_ROOT, status=False)
+        # Case A: Single parquet file in the root
+        parquets = [e for e in entries if e.endswith(".parquet")]
+        if parquets:
+            flood_risk_df = _read_parquet_from_hdfs(client, f"{SILVER_FLOOD_RISK_ROOT}/{parquets[0]}")
+            log.info("Flood risk data from single file: %d rows", len(flood_risk_df))
+        
+        # Case B: Partitioned by dt=... (backup check)
+        if flood_risk_df.empty:
+            partitions = sorted([e for e in entries if e.startswith("dt=")], reverse=True)
+            for part in partitions:
+                part_date = part.replace("dt=", "")
+                flood_risk_df = load_parquet_partition(client, SILVER_FLOOD_RISK_ROOT, part_date)
+                if not flood_risk_df.empty:
+                    log.info("Flood risk data from partition %s: %d rows", part, len(flood_risk_df))
+                    break
     except Exception as exc:
         log.warning("Could not load flood risk data: %s", exc)
 
