@@ -38,19 +38,19 @@ MSCK REPAIR TABLE silver_reservoir;
 -- ── silver_flood_risk (single Parquet file) ───────────────────────────────────
 CREATE EXTERNAL TABLE IF NOT EXISTS silver_flood_risk (
     geocode             STRING,
-    month               INT,
+    month               BIGINT,
     tambon_th           STRING,
     tambon_en           STRING,
-    amphoe_code         INT,
+    amphoe_code         BIGINT,
     amphoe_th           STRING,
     amphoe_en           STRING,
-    prov_code           INT,
+    prov_code           BIGINT,
     prov_th             STRING,
     prov_en             STRING,
-    flood_count_17yr    INT,
+    flood_count_17yr    BIGINT,
     flood_criteria      STRING,
     risk_level          STRING,
-    risk_score          INT,
+    risk_score          BIGINT,
     silver_loaded_at    STRING
 )
 STORED AS PARQUET
@@ -59,7 +59,7 @@ TBLPROPERTIES ('parquet.compress'='SNAPPY');
 
 -- ── silver_weather (partitioned Parquet) ──────────────────────────────────────
 CREATE EXTERNAL TABLE IF NOT EXISTS silver_weather (
-    prov_code               INT,
+    prov_code               BIGINT,
     prov_th                 STRING,
     prov_en                 STRING,
     region                  STRING,

@@ -290,4 +290,4 @@ with DAG(
     # → data_quality_check
     # → export_dashboard (JSON snapshots for Cowork dashboard)
     [ingest_static, ingest_kafka, generate_weather] >> bronze_to_silver
-    bronze_to_silver >> hive_init >> silver_to_gold >> compute_features >> flood_alert >> data_quality_check >> export_dashboard
+    bronze_to_silver >> data_quality_check >> hive_init >> silver_to_gold >> compute_features >> flood_alert >> export_dashboard

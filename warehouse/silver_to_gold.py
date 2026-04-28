@@ -36,10 +36,10 @@ SET hive.exec.dynamic.partition=true;
 SET hive.exec.dynamic.partition.mode=nonstrict;
 SET hive.vectorized.execution.enabled=false;
 SET hive.vectorized.execution.reduce.enabled=false;
-SET mapreduce.map.memory.mb=512;
-SET mapreduce.reduce.memory.mb=512;
-SET mapreduce.map.java.opts=-Xmx400m;
-SET mapreduce.reduce.java.opts=-Xmx400m;
+SET mapreduce.map.memory.mb=2048;
+SET mapreduce.reduce.memory.mb=2048;
+SET mapreduce.map.java.opts=-Xmx1600m;
+SET mapreduce.reduce.java.opts=-Xmx1600m;
 SET hive.merge.mapfiles=true;
 SET hive.merge.mapredfiles=true;
 """
@@ -101,19 +101,19 @@ TBLPROPERTIES ('parquet.compress'='SNAPPY');
     run_hql("""
 CREATE EXTERNAL TABLE IF NOT EXISTS silver.silver_flood_risk (
     geocode             STRING,
-    month               INT,
+    month               BIGINT,
     tambon_th           STRING,
     tambon_en           STRING,
-    amphoe_code         INT,
+    amphoe_code         BIGINT,
     amphoe_th           STRING,
     amphoe_en           STRING,
-    prov_code           INT,
+    prov_code           BIGINT,
     prov_th             STRING,
     prov_en             STRING,
-    flood_count_17yr    INT,
+    flood_count_17yr    BIGINT,
     flood_criteria      STRING,
     risk_level          STRING,
-    risk_score          INT,
+    risk_score          BIGINT,
     silver_loaded_at    STRING
 )
 STORED AS PARQUET
@@ -123,7 +123,7 @@ TBLPROPERTIES ('parquet.compress'='SNAPPY');
 
     run_hql("""
 CREATE EXTERNAL TABLE IF NOT EXISTS silver.silver_weather (
-    prov_code               INT,
+    prov_code               BIGINT,
     prov_th                 STRING,
     prov_en                 STRING,
     region                  STRING,
